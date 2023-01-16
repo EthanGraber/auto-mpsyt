@@ -1,3 +1,4 @@
 *.js
 auto-mpsyt
 *.txt
+node_modules/

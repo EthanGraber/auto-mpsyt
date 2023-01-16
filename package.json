@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/EthanGraber/auto-mpsyt/issues"
   },
-  "homepage": "https://github.com/EthanGraber/auto-mpsyt#readme"
+  "homepage": "https://github.com/EthanGraber/auto-mpsyt#readme",
+  "devDependencies": {
+    "@types/node": "^18.11.18"
+  }
 }
