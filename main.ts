@@ -29,22 +29,30 @@ const add_to_mpd = (url_list: string[], attempt_num: number) => {
   exec(`rm ${process.env.HOME}/.config/mps-youtube/cache_py_3.10.`);
 
   const retry_urls: string[] = [];
+  const promises: Promise<void>[] = [];
 
   url_list.forEach((url) => {
     const mpsyt = spawn('mpsyt', ['playurl', url]);
 
-    setTimeout(() => {
-      if (mpsyt.exitCode === null) {
-        retry_urls.push(mpsyt.spawnargs[2]);
-        console.log('attempting to kill pid:0', mpsyt.pid);
-        treeKill(mpsyt.pid);
-      }
-    }, 5000);
+    const promise = new Promise<void>((resolve) => {
+      mpsyt.stdout.on('data', (data) => {
+        if (data.includes('Problem playing last item:')) {
+          retry_urls.push(mpsyt.spawnargs[2]);
+          console.log('attempting to kill pid:', mpsyt.pid);
+          treeKill(mpsyt.pid);
+          resolve();
+        }
+      });
+
+      mpsyt.on('close', () => {
+        resolve();
+      });
+    });
+
+    promises.push(promise);
   });
 
-  //This would be a hell of a lot cleaner with a promise
-  //  but whatever
-  setTimeout(() => {
+  Promise.allSettled(promises).then(() => {
     if (retry_urls.length > 0) {
       console.log('retrying the following urls:');
       console.log(retry_urls);
@@ -52,5 +60,5 @@ const add_to_mpd = (url_list: string[], attempt_num: number) => {
     } else {
       console.log('done');
     }
-  }, 5250);
+  });
 };
