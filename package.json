@@ -1,0 +1,19 @@
+{
+  "name": "auto-mpsyt",
+  "version": "1.0.0",
+  "description": "personal script",
+  "main": "auto-mpsyt.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EthanGraber/auto-mpsyt.git"
+  },
+  "author": "Ethan Graber",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EthanGraber/auto-mpsyt/issues"
+  },
+  "homepage": "https://github.com/EthanGraber/auto-mpsyt#readme"
+}
